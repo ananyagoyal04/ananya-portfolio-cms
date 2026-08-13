@@ -425,6 +425,43 @@ nav{
 .sec-note{ font-family:var(--mono); font-size:12.5px; color:var(--ink-faint); max-width:230px; line-height:1.7; text-align:right; }
 
 /* ============================================================
+   QUOTE STRIP — cooler quotes dropped between sections
+   ============================================================ */
+.quote-strip{
+  padding:70px 0;
+  border-bottom:1px solid var(--line);
+  text-align:center;
+  position:relative;
+}
+.quote-strip blockquote{
+  margin:0 auto;
+  max-width:720px;
+  font-family:var(--display);
+  font-weight:600;
+  font-size:clamp(20px, 3vw, 30px);
+  line-height:1.35;
+  color:var(--ink);
+  padding:0 24px;
+}
+.quote-strip blockquote span.mark{
+  background:var(--grad);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.quote-strip cite{
+  display:block;
+  margin-top:18px;
+  font-family:var(--mono);
+  font-style:normal;
+  font-size:12.5px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+}
+.quote-strip cite::before{ content:"— "; }
+
+/* ============================================================
    ABOUT
    ============================================================ */
 .about{ padding:150px 0; border-bottom:1px solid var(--line); }
@@ -496,7 +533,8 @@ nav{
    EDUCATION
    ============================================================ */
 .education{ padding:150px 0; border-bottom:1px solid var(--line); }
-.edu-layout{ display:grid; grid-template-columns:auto 1fr; gap:56px; align-items:center; }
+.edu-item{ display:grid; grid-template-columns:auto 1fr; gap:56px; align-items:center; }
+.edu-item + .edu-item{ margin-top:70px; padding-top:70px; border-top:1px solid var(--line); }
 .edu-years{
   font-family:var(--display); font-weight:800; font-size:clamp(64px, 9vw, 130px); line-height:0.85;
   color:transparent; -webkit-text-stroke:1.5px var(--fire); white-space:nowrap;
@@ -505,11 +543,54 @@ nav{
 .edu-content .edu-degree{ font-size:clamp(22px, 2.8vw, 32px); color:var(--ink); margin-bottom:14px; max-width:520px; font-weight:700; text-align:left; }
 .edu-school{ font-family:var(--mono); font-size:14px; color:var(--cyan); margin-bottom:18px; text-align:left; }
 .edu-note{ color:var(--ink-dim); font-size:16px; max-width:460px; text-align:left; }
+.edu-meta{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-top:24px; }
 .edu-status{
-  display:inline-flex; align-items:center; gap:9px; margin-top:24px; font-family:var(--mono);
+  display:inline-flex; align-items:center; gap:9px; font-family:var(--mono);
   font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint);
 }
 .edu-status::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--fire); }
+.edu-cgpa{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--gold); border:1px solid var(--line-strong); padding:6px 14px; border-radius:999px;
+}
+
+/* ============================================================
+   CERTIFICATIONS
+   ============================================================ */
+.certificates{ padding:150px 0; border-bottom:1px solid var(--line); }
+.cert-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:26px; }
+.cert-card{
+  border:1px solid var(--line-strong); border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,0.03); transition:transform .35s var(--ease), border-color .3s ease;
+}
+.cert-card:hover{ transform:translateY(-6px); border-color:var(--cyan); }
+.cert-image{
+  display:block; position:relative; aspect-ratio:4/3;
+  background:linear-gradient(160deg, #2a1030, #100a1c);
+}
+.cert-image img{ width:100%; height:100%; object-fit:cover; display:block; }
+.cert-fallback{
+  position:absolute; inset:0; display:none; flex-direction:column; align-items:center; justify-content:center;
+  gap:8px; text-align:center; padding:18px;
+  background:radial-gradient(circle at 30% 20%, rgba(76,224,210,0.18), transparent 55%), linear-gradient(160deg, #2a1030, #100a1c);
+}
+.cert-fallback .mono-tag{ font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-dim); }
+.cert-body{ padding:22px 22px 26px; }
+.cert-body h3{ font-size:16.5px; font-weight:700; color:var(--ink); margin-bottom:4px; }
+.cert-sub{ font-family:var(--mono); font-size:12px; color:var(--cyan); margin-bottom:14px; }
+.cert-link{
+  display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px;
+  letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); transition:gap .3s ease, color .3s ease;
+}
+.cert-link:hover{ gap:12px; color:var(--fire); }
+
+/* ---- project meta (tech stack tags) ---- */
+.project-status-row{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:32px; }
+.project-tags{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin:22px 0 0; }
+.project-tags span{
+  font-family:var(--mono); font-size:12px; color:var(--ink-dim); border:1px solid var(--line-strong);
+  padding:6px 14px; border-radius:999px;
+}
 
 /* ============================================================
    CONTACT
@@ -556,7 +637,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
   .hero-grid{ grid-template-columns:1fr; gap:60px; }
   .portrait-wrap{ justify-self:center; max-width:340px; order:-1; }
   .about-lower{ grid-template-columns:1fr; gap:36px; }
-  .edu-layout{ grid-template-columns:1fr; gap:26px; text-align:left; }
+  .edu-item{ grid-template-columns:1fr; gap:26px; text-align:left; }
+  .edu-item + .edu-item{ margin-top:48px; padding-top:48px; }
 }
 
 @media (max-width: 760px){
@@ -581,6 +663,8 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
   .sec-note{ text-align:left; max-width:100%; }
 
   .project-card{ padding:52px 22px; }
+  .certificates{ padding:96px 0; }
+  .cert-grid{ grid-template-columns:1fr 1fr; }
   .contact{ padding:110px 0 70px; }
   .footer-row{ flex-direction:column; text-align:center; }
 }
@@ -588,6 +672,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
 @media (max-width: 460px){
   .btn{ padding:13px 22px; font-size:11.5px; }
   .contact-link{ padding:13px 20px; }
+  .cert-grid{ grid-template-columns:1fr; }
 }
 
 </style>
@@ -608,7 +693,9 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#certificates">Certificates</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="mailto:ananya00476@gmail.com" class="nav-cta" data-cursor-text="Say hi">Get in touch</a>
@@ -621,7 +708,9 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about">About</a>
   <a href="#skills">Skills</a>
+  <a href="#certificates">Certificates</a>
   <a href="#projects">Projects</a>
+  <a href="#education">Education</a>
   <a href="#contact">Contact</a>
   <a href="mailto:ananya00476@gmail.com" class="mm-email">ananya00476@gmail.com</a>
 </div>
@@ -752,6 +841,16 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
     </div>
   </section>
 
+  <!-- ============ QUOTE ============ -->
+  <div class="quote-strip">
+    <div class="wrap">
+      <blockquote data-reveal="scale">
+        <span class="mark">Code is like humor</span> — when you have to explain it, it's bad.
+      </blockquote>
+      <cite data-reveal>Cory House</cite>
+    </div>
+  </div>
+
   <!-- ============ SKILLS ============ -->
   <section class="skills" id="skills">
     <div class="wrap">
@@ -805,12 +904,105 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
     </div>
   </section>
 
+  <!-- ============ CERTIFICATIONS ============ -->
+  <section class="certificates" id="certificates">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="sec-label" data-reveal>03 &mdash; Certifications</span>
+          <h2 class="sec-title" data-reveal>Proof, not just promises.</h2>
+          <p class="funky-line" data-reveal style="margin-top:14px;">collecting badges like they're Pokémon cards</p>
+        </div>
+        <p class="sec-note" data-reveal>Click a card to view the certificate.</p>
+      </div>
+
+      <div class="cert-grid">
+
+        <!-- MongoDB certificate -->
+        <div class="cert-card" data-reveal="scale">
+          <div class="cert-image">
+            <img src="assets/mongodb.jpg" alt="MongoDB Certified Associate — Atlas Administrator badge"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="cert-fallback">
+              <span class="mono-tag">mongodb.jpg</span>
+              <span class="mono-tag">not added yet</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <h3>MongoDB Certified Associate</h3>
+            <p class="cert-sub">Atlas Administrator</p>
+            <a href="assets/mongodb-certificate.pdf" target="_blank" rel="noopener" class="cert-link" data-cursor-text="View">See certificate &#8599;</a>
+          </div>
+        </div>
+
+        <!-- Infosys Springboard — Exploring Data Analysis -->
+        <div class="cert-card" data-reveal="scale">
+          <a class="cert-image" href="assets/infosys-data-analysis.jpg" target="_blank" rel="noopener" data-cursor-text="View">
+            <img src="assets/infosys-data-analysis.jpg" alt="Infosys Springboard certificate — Exploring Data Analysis"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="cert-fallback">
+              <span class="mono-tag">infosys-data-analysis.jpg</span>
+              <span class="mono-tag">not added yet</span>
+            </div>
+          </a>
+          <div class="cert-body">
+            <h3>Exploring Data Analysis</h3>
+            <p class="cert-sub">Infosys Springboard</p>
+          </div>
+        </div>
+
+        <!-- Infosys Springboard — Data Visualization using Python -->
+        <div class="cert-card" data-reveal="scale">
+          <a class="cert-image" href="assets/infosys-data-visualization.jpg" target="_blank" rel="noopener" data-cursor-text="View">
+            <img src="assets/infosys-data-visualization.jpg" alt="Infosys Springboard certificate — Data Visualization using Python"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="cert-fallback">
+              <span class="mono-tag">infosys-data-visualization.jpg</span>
+              <span class="mono-tag">not added yet</span>
+            </div>
+          </a>
+          <div class="cert-body">
+            <h3>Data Visualization using Python</h3>
+            <p class="cert-sub">Infosys Springboard</p>
+          </div>
+        </div>
+
+        <!-- Infosys Springboard — Programming using Java -->
+        <div class="cert-card" data-reveal="scale">
+          <a class="cert-image" href="assets/infosys-java.jpg" target="_blank" rel="noopener" data-cursor-text="View">
+            <img src="assets/infosys-java.jpg" alt="Infosys Springboard certificate — Programming using Java"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="cert-fallback">
+              <span class="mono-tag">infosys-java.jpg</span>
+              <span class="mono-tag">not added yet</span>
+            </div>
+          </a>
+          <div class="cert-body">
+            <h3>Programming using Java</h3>
+            <p class="cert-sub">Infosys Springboard</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUOTE ============ -->
+  <div class="quote-strip">
+    <div class="wrap">
+      <blockquote data-reveal="scale">
+        First, <span class="mark">solve the problem.</span> Then, write the code.
+      </blockquote>
+      <cite data-reveal>John Johnson</cite>
+    </div>
+  </div>
+
   <!-- ============ PROJECTS ============ -->
   <section class="projects" id="projects">
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <span class="sec-label" data-reveal>03 &mdash; Projects</span>
+          <span class="sec-label" data-reveal>04 &mdash; Projects</span>
           <h2 class="sec-title" data-reveal>Currently building something worth showing.</h2>
         </div>
         <p class="sec-note" data-reveal>This space is intentionally unfinished.</p>
@@ -820,12 +1012,22 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
         <div class="grid-bg" aria-hidden="true"></div>
         <div class="glow" aria-hidden="true"></div>
         <div class="project-inner">
-          <span class="status-pill">In Progress</span>
-          <h3>First real projects are being prototyped &mdash; putting the stack above to actual use.</h3>
-          <p>Nothing fake goes here. When something ships, it lands in this exact spot.</p>
-          <p class="funky-line" style="margin-top:16px;">TODO: ship something (soon™)</p>
+          <span class="status-pill">Prototype &middot; In Progress</span>
+          <h3>Parkwise</h3>
+          <p>
+            A smart parking solution I'm currently prototyping &mdash; helping drivers
+            find and reserve a spot without the usual guesswork. Still early, still rough
+            around the edges, still very much mine.
+          </p>
+          <div class="project-tags">
+            <span>React.js</span>
+            <span>Node.js</span>
+            <span>MongoDB</span>
+            <span>Firebase</span>
+          </div>
+          <p class="funky-line" style="margin-top:20px;">turning "no parking" signs into a UI problem</p>
           <div class="project-arrow">
-            <span>Check back soon</span>
+            <span>Demo coming soon</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M12 5v14M5 12l7 7 7-7"/>
             </svg>
@@ -838,8 +1040,9 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
   <!-- ============ EDUCATION ============ -->
   <section class="education" id="education">
     <div class="wrap">
-      <span class="sec-label" data-reveal>04 &mdash; Education</span>
-      <div class="edu-layout">
+      <span class="sec-label" data-reveal>05 &mdash; Education</span>
+
+      <div class="edu-item">
         <span class="edu-years" data-reveal="left" aria-hidden="true">24&mdash;<br>NOW</span>
         <div class="edu-content" data-reveal="right">
           <h3 class="edu-degree">B.E. Computer Science &amp; Engineering</h3>
@@ -849,16 +1052,44 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
             things along the way.
           </p>
           <p class="funky-line" style="margin-top:18px;">while (learning) { keepGoing(); }</p>
-          <span class="edu-status">2024 &mdash; Present</span>
+          <div class="edu-meta">
+            <span class="edu-status">2024 &mdash; Present</span>
+            <span class="edu-cgpa">CGPA &mdash; 8.9</span>
+          </div>
         </div>
       </div>
+
+      <div class="edu-item">
+        <span class="edu-years" data-reveal="left" aria-hidden="true">12<sup style="-webkit-text-stroke:0; font-size:0.4em;">th</sup></span>
+        <div class="edu-content" data-reveal="right">
+          <h3 class="edu-degree">Class XII</h3>
+          <p class="edu-school">Holy Angels Convent School, Muzaffarnagar, Uttar Pradesh</p>
+          <p class="edu-note">
+            Wrapped up school with 70% &mdash; the last stop before engineering took over.
+          </p>
+          <div class="edu-meta">
+            <span class="edu-cgpa">Score &mdash; 70%</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
+
+  <!-- ============ QUOTE ============ -->
+  <div class="quote-strip">
+    <div class="wrap">
+      <blockquote data-reveal="scale">
+        Turning ideas into <span class="mark">interfaces,</span> one commit at a time.
+      </blockquote>
+      <cite data-reveal>Ananya Goyal</cite>
+    </div>
+  </div>
 
   <!-- ============ CONTACT ============ -->
   <section class="contact" id="contact">
     <div class="wrap">
-      <p class="sec-label" style="text-align:center;" data-reveal>05 &mdash; Contact</p>
+      <p class="sec-label" style="text-align:center;" data-reveal>06 &mdash; Contact</p>
       <h2 class="contact-statement" data-reveal>
         Have an idea? <span class="dim">Let's</span><br>
         make <em>something.</em>
@@ -938,7 +1169,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--fire); outline-of
 
   /* ---------------- SCROLLSPY NAV ---------------- */
   var navLinks = document.querySelectorAll('.nav-links a');
-  var sectionIds = ['about','skills','projects','contact'];
+  var sectionIds = ['about','skills','certificates','projects','education','contact'];
   var sections = sectionIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
   if('IntersectionObserver' in window){
     var spy = new IntersectionObserver(function(entries){
